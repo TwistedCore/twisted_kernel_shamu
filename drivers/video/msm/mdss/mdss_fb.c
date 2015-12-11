@@ -65,7 +65,7 @@
 				out = (((v) - 2) * 255 / 250);\
 				} while (0)
 
-bool backlight_dimmer = false;
+bool backlight_dimmer = true;
 module_param(backlight_dimmer, bool, 0664);
 
 #define MAX_FBI_LIST 32
