@@ -119,12 +119,13 @@ static struct request *
 maple_choose_expired_request(struct maple_data *mdata)
 {
 	/* Reset (non-expired-)batch-counter */
-	mdata->batched = 0;
 
 	struct request *rq_sync_read = maple_expired_request(mdata, SYNC, READ);
 	struct request *rq_sync_write = maple_expired_request(mdata, SYNC, WRITE);
 	struct request *rq_async_read = maple_expired_request(mdata, ASYNC, READ);
 	struct request *rq_async_write = maple_expired_request(mdata, ASYNC, WRITE);
+
+	mdata->batched = 0;
 
 	/*
 	 * Check expired requests.
@@ -157,10 +158,11 @@ static struct request *
 maple_choose_request(struct maple_data *mdata, int data_dir)
 {
 	/* Increase (non-expired-)batch-counter */
-	mdata->batched++;
 
 	struct list_head *sync = mdata->fifo_list[SYNC];
 	struct list_head *async = mdata->fifo_list[ASYNC];
+
+	mdata->batched++;
 
 	/*
 	 * Retrieve request from available fifo list.
